@@ -1,5 +1,8 @@
 function sum(a, b) {
-  /* ваш код */
+    if ([a, b].every(item => Number.isFinite(item))) {
+        return a + b;
+    }
+    throw new TypeError()
 }
 
 module.exports = sum;
