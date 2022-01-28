@@ -1,4 +1,4 @@
-class Validator {
+module.exports = class Validator {
   constructor(rules) {
     this.rules = rules;
   }
@@ -39,23 +39,4 @@ class Validator {
 
     return errors;
   }
-};
-
-const validator = new Validator({
-  name: {
-    type: 'string',
-    min: 5,
-    max: 8,
-  },
-  age: {
-    type: 'number',
-    min: 18,
-    max: 27,
-  }
-});
-
-const errors = validator.validate({ name: 20, age: 17 });
-
-console.log(errors);
-
-module.exports = Validator;
+}
