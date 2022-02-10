@@ -8,6 +8,16 @@ module.exports.productsByQuery = async function productsByQuery(ctx, next) {
     $text: {
       $search: query,
     },
+  },
+  {
+    score:
+        {
+          $meta: 'textScore',
+        },
+  }).sort( {
+    score: {
+      $meta: 'textScore',
+    },
   });
   const products = rawProduct.map((product) => {
     return mapProduct(product);
