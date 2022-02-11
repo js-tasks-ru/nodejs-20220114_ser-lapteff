@@ -2,7 +2,7 @@ const Product = require('../../02-rest-api/models/Product');
 const mapProduct = require('../../02-rest-api/mappers/product');
 module.exports.productsByQuery = async function productsByQuery(ctx, next) {
   const {query} = ctx.query;
-  if (!query) return next();
+  // if (!query) return next();
 
   const rawProduct = await Product.find({
     $text: {
@@ -11,9 +11,9 @@ module.exports.productsByQuery = async function productsByQuery(ctx, next) {
   },
   {
     score:
-        {
-          $meta: 'textScore',
-        },
+      {
+        $meta: 'textScore',
+      },
   }).sort( {
     score: {
       $meta: 'textScore',
