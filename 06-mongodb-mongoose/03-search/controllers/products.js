@@ -1,8 +1,7 @@
-const Product = require('../../02-rest-api/models/Product');
-const mapProduct = require('../../02-rest-api/mappers/product');
+const Product = require('../models/Product');
+const mapProduct = require('../mappers/product');
 module.exports.productsByQuery = async function productsByQuery(ctx, next) {
   const {query} = ctx.query;
-  // if (!query) return next();
 
   const rawProduct = await Product.find({
     $text: {
