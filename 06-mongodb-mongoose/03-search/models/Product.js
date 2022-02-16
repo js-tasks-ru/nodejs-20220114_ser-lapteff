@@ -5,11 +5,15 @@ const productSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    // text: true,
+    // index: true,
   },
 
   description: {
     type: String,
     required: true,
+    // text: true,
+    // index: true,
   },
 
   price: {
@@ -31,5 +35,18 @@ const productSchema = new mongoose.Schema({
   images: [String],
 
 });
-
+productSchema.index({
+  title: 'text',
+  description: 'text',
+},
+{
+  weights: {
+    title: 10,
+    description: 5,
+  },
+  name: 'TextSearchIndex',
+  default_language: 'russian',
+},
+);
+// console.log(productSchema.indexes());
 module.exports = connection.model('Product', productSchema);
