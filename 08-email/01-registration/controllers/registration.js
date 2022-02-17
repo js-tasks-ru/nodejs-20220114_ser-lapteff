@@ -3,6 +3,7 @@ const User = require('../models/User');
 const sendMail = require('../libs/sendMail');
 
 module.exports.register = async (ctx, next) => {
+
   const {email, displayName, password} = ctx.request.body;
 
   const verificationToken = uuid();
@@ -41,4 +42,6 @@ module.exports.confirm = async (ctx, next) => {
   const token = await ctx.login(user);
   ctx.body = {token};
   return next();
+
 };
+
