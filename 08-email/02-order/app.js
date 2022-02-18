@@ -12,8 +12,67 @@ const {register, confirm} = require('./controllers/registration');
 const {checkout, getOrdersList} = require('./controllers/orders');
 const Session = require('./models/Session');
 
-const app = new Koa();
+// const Category = require('./models/Category');
+// const Product = require('./models/Product');
+// const User = require('./models/User');
+//
+// (async function() {
+//   await Category.deleteMany();
+//   await Product.deleteMany();
+//
+//   const category = await Category.create({
+//     title: 'Category1',
+//     subcategories: [{
+//       title: 'Subcategory1',
+//     }],
+//   });
+//
+//   await Product.create({
+//     title: 'ProductA',
+//     description: 'тест',
+//     price: 10,
+//     category: category.id,
+//     subcategory: category.subcategories[0].id,
+//     images: ['image1'],
+//   });
+//
+//   await Product.create({
+//     title: 'ProductB',
+//     description: 'better than ProductA',
+//     price: 10,
+//     category: category.id,
+//     subcategory: category.subcategories[0].id,
+//     images: ['image1'],
+//   });
+//   await Product.create({
+//     title: 'ProductC',
+//     description: 'тес тест',
+//     price: 10,
+//     category: category.id,
+//     subcategory: category.subcategories[0].id,
+//     images: ['image1'],
+//   });
+// })();
+//
+// async function createUserAndSession(userData, token) {
+//   const user = new User(userData);
+//   await user.setPassword(userData.password);
+//   await user.save();
+//   await Session.create({token, user, lastVisit: new Date()});
+//   return user;
+// }
+// (async function() {
+//   const userData = {
+//     email: 'user@mail.com',
+//     displayName: 'user',
+//     password: '123123',
+//   };
+//   const token = 'token';
+//   const user = await createUserAndSession(userData, token);
+//
+// })()
 
+const app = new Koa();
 app.use(require('koa-bodyparser')());
 
 app.use(async (ctx, next) => {
@@ -76,8 +135,8 @@ router.get('/me', mustBeAuthenticated, me);
 router.post('/register', handleMongooseValidationError, register);
 router.post('/confirm', confirm);
 
-router.get('/orders', getOrdersList);
-router.post('/orders', checkout);
+router.get('/orders', mustBeAuthenticated, getOrdersList);
+router.post('/orders', mustBeAuthenticated, handleMongooseValidationError, checkout);
 
 app.use(router.routes());
 
